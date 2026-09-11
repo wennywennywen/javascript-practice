@@ -1,3 +1,5 @@
+//review exercises for step2 with alterations as a shopping list app
+
 let items = []
 
 function formatItem(item){
