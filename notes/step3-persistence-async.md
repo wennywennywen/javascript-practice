@@ -761,7 +761,17 @@ Your resolution tracker, with:
 # What this unlocks
 
 After this you can build a front end that loads real data, survives refreshes, handles failure,
-and tells the user what's happening. That's a complete client.
+and tells the user what's happening. That's a complete client — the whole "JavaScript
+fundamentals (DOM, fetch, async)" phase, done.
 
-**Step 4 is the other half:** Node and Express — writing the server your `fetch` talks to,
-storing data in a database, and having your own API instead of borrowing someone else's.
+**Step 4 is npm, then React.** Backend comes later, deliberately: the target companies are
+JS/TS-frontend-leaning, so depth on the client side comes first.
+
+React will feel familiar fast. The render loop you built by hand —
+
+```
+state changes  →  render()  →  page redraws
+```
+
+— is exactly what React automates. You'll stop calling `render()` and it'll happen for you.
+Building it manually first is why that will read as a convenience rather than magic.
