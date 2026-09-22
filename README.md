@@ -1,8 +1,8 @@
 # JavaScript Practice
 
-Self-directed practice working through JavaScript fundamentals, the DOM, and asynchronous code
-— from loops to an app that talks to a real API. Every file here is exercise code: written,
-broken, and debugged by hand rather than copied.
+Self-directed practice working through JavaScript from loops to React — fundamentals, the DOM,
+async code, tooling. Every file here is exercise code: written, broken, and debugged by hand
+rather than copied.
 
 Worked through with an AI tutor giving hints rather than answers. The exercise sheets in
 `notes/` came from that; the code and the comments are mine.
@@ -22,6 +22,15 @@ Worked through with an AI tutor giving hints rather than answers. The exercise s
 
 03-async/            data that outlives the page
 └── step3.js         JSON, localStorage, promises, async/await, fetch
+
+03-checkpoint/       everything above, one app, from empty files
+├── index.html
+├── app.js
+└── style.css
+
+04-npm-react/        tooling and the first framework
+├── npm-practice/    package.json, installing packages, import/export, scripts
+└── my-first-react/  a Vite + React project
 
 notes/               the exercise sheets for each phase
 ```
@@ -60,22 +69,45 @@ made it worth doing.
 - `fetch` against a live API, and the fact that **a 404 doesn't throw** — you have to check
   `response.ok` yourself
 
-## The app these built
+**`03-checkpoint/`** — a reading list built from three empty files, with the previous projects
+closed. Different domain on purpose, so it couldn't be typed from muscle memory. Everything
+from the phases above in one app: the render loop, immutable updates, event delegation,
+localStorage persistence, and a `fetch` with loading and error states.
 
-The finished version lives in a separate repo: a resolution tracker with localStorage
-persistence, a fetch-backed "load examples" button, and loading states.
+The requirements and the self-tests are in `notes/checkpoint-test.md` — including the ones
+worth running deliberately: corrupt the stored data, break the URL, turn the wifi off.
+
+**`04-npm-react/`** — the tooling layer, and the start of React:
+- `npm-practice/` — what `package.json` actually does, installing a package and watching it get
+  recorded, `import`/`export` and the `"type": "module"` switch, npm scripts
+- `my-first-react/` — a Vite + React project, scaffolded and stripped back
 
 ## Running it
 
 ```bash
 node 01-fundamentals/step1.js
 node 01-fundamentals/todo.js
+node 04-npm-react/npm-practice/index.js
 ```
 
-`02-dom/` needs a browser — open `index.html`. `03-async/step3.js` is split: the JSON and
-async sections run in Node, but `localStorage` only exists in a browser, so those parts were
-run in the browser console instead. Same language, different environment, different globals —
-which was its own lesson.
+`02-dom/` and `03-checkpoint/` need a browser — open their `index.html`.
+
+`03-async/step3.js` is split: the JSON and async sections run in Node, but `localStorage` only
+exists in a browser, so those parts were run in the browser console instead. Same language,
+different environment, different globals — which was its own lesson.
+
+```bash
+cd 04-npm-react/my-first-react
+npm install
+npm run dev
+```
+
+`node_modules` is not committed — `npm install` rebuilds it from `package.json`.
+
+## What's next
+
+React proper, then Tailwind, then Node and Express. Notes in
+`notes/step4-npm-react.md`.
 
 ## Note on the comments
 
