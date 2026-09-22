@@ -22,6 +22,8 @@ Three new files: `index.html`, `app.js`, `style.css`. **Don't open your old proj
 - [ ] Each article has a **Read / Unread** toggle and a **Remove** button
 - [ ] A line at the top: `"2 of 5 read"` — correct singular when there's one
 - [ ] An empty list says something friendly, not `"0 of 0"`
+
+
 - [ ] Everything survives a refresh
 - [ ] A **"Load suggestions"** button fetches 5 posts from
       `https://jsonplaceholder.typicode.com/posts?_limit=5` and **adds** them to your list
