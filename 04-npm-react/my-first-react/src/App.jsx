@@ -1,120 +1,92 @@
 import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import Greetings from './Greetings'
+import Counter from './Counter'
 import './App.css'
 
+// ============================================================
+// HELPERS — data in, data out. No state, no JSX.
+// Outside the component, so it isn't recreated on every render.
+// ============================================================
+
+function addBooks(books, title) {
+  if (title.trim() === "") return books
+
+  const ids = books.map(book => book.id)
+  const newBook = { id: Math.max(0, ...ids) + 1, title: title.trim(), done: false }
+  return [...books, newBook]
+}
+
+// ============================================================
+// APP
+// ============================================================
+
 function App() {
+  // --- the reading list ---
+  const [books, setBooks] = useState([
+    { id: 1, title: "Dune", done: false },
+  ])
+  const [text, setText] = useState("")
+
+  // --- counter practice (R5, R6) ---
   const [count, setCount] = useState(0)
+  const [number, setNumber] = useState(0)
+  const [sum, setSum] = useState(5)
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    if (text.trim() === "") return
+
+    setBooks(addBooks(books, text))
+    setText("")
+  }
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      {/* ---------- READING LIST ---------- */}
+      <h2>Reading list</h2>
 
-      <div className="ticks"></div>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="book-input">What's to read?</label>
+        <input
+          id="book-input"
+          value={text}
+          onChange={e => setText(e.target.value)}
+        />
+        <button type="submit">Add</button>
+      </form>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      <ul>
+        {books.map(book => (
+          <li key={book.id}>
+            {book.title} is {String(book.done)}
+          </li>
+        ))}
+      </ul>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+      {/* ---------- PRACTICE: props (R4) ---------- */}
+      <Greetings name="uyen" />
+      <Greetings name="minh" />
+      <Greetings name="lan" />
+
+      {/* ---------- PRACTICE: live input (R8) ---------- */}
+      <input value={text} onChange={e => setText(e.target.value)} />
+      <p>{text}</p>
+
+      {/* ---------- PRACTICE: one state, two buttons (R5) ---------- */}
+      <button onClick={() => setCount(count - 1)}>−</button>
+      <span>{count}</span>
+      <button onClick={() => setCount(count + 1)}>+</button>
+
+      {/* ---------- PRACTICE: a second, separate state (R6) ---------- */}
+      <button onClick={() => setNumber(number - 2)}>−2</button>
+      <span>{number}</span>
+      <button onClick={() => setNumber(number + 2)}>+2</button>
+
+      {/* ---------- PRACTICE: a third state, counting down ---------- */}
+      <button onClick={() => setSum(sum - 1)}>Sum is {sum}</button>
+
+      {/* ---------- PRACTICE: component in its own file ---------- */}
+      <Counter />
     </>
   )
 }
