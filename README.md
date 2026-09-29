@@ -30,7 +30,7 @@ Worked through with an AI tutor giving hints rather than answers. The exercise s
 
 04-npm-react/        tooling and the first framework
 ├── npm-practice/    package.json, installing packages, import/export, scripts
-│                    (+ step4-npm-react.md — my own notes as I went)
+│                    (+ step4.md — my own notes as I went)
 └── my-first-react/  a Vite + React project
     └── src/         App.jsx, Counter.jsx, Greetings.jsx
 
@@ -83,7 +83,7 @@ worth running deliberately: corrupt the stored data, break the URL, turn the wif
 
 - `npm-practice/` — what `package.json` actually does, installing a package and watching it get
   recorded, `import`/`export` and the `"type": "module"` switch, npm scripts.
-  `step4-npm-react.md` in there is my own running notes — every exercise with the code and what
+  `step4.md` in there is my own running notes — every exercise with the code and what
   confused me about it.
 - `my-first-react/` — a Vite + React project. Components, props, JSX, `useState`, rendering a
   list with `.map` and keys, and a controlled input with a form.
