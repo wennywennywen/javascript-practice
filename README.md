@@ -30,7 +30,9 @@ Worked through with an AI tutor giving hints rather than answers. The exercise s
 
 04-npm-react/        tooling and the first framework
 ├── npm-practice/    package.json, installing packages, import/export, scripts
+│                    (+ step4-npm-react.md — my own notes as I went)
 └── my-first-react/  a Vite + React project
+    └── src/         App.jsx, Counter.jsx, Greetings.jsx
 
 notes/               the exercise sheets for each phase
 ```
@@ -78,9 +80,18 @@ The requirements and the self-tests are in `notes/checkpoint-test.md` — includ
 worth running deliberately: corrupt the stored data, break the URL, turn the wifi off.
 
 **`04-npm-react/`** — the tooling layer, and the start of React:
+
 - `npm-practice/` — what `package.json` actually does, installing a package and watching it get
-  recorded, `import`/`export` and the `"type": "module"` switch, npm scripts
-- `my-first-react/` — a Vite + React project, scaffolded and stripped back
+  recorded, `import`/`export` and the `"type": "module"` switch, npm scripts.
+  `step4-npm-react.md` in there is my own running notes — every exercise with the code and what
+  confused me about it.
+- `my-first-react/` — a Vite + React project. Components, props, JSX, `useState`, rendering a
+  list with `.map` and keys, and a controlled input with a form.
+
+The interesting part of the React work is how much carried over: `addBooks` is the same
+function from `03-checkpoint`, unchanged. Taking data and returning data — no `document`, no
+mutation — turns out to be exactly what React wants. The render loop and the event delegation
+are what React replaces; the data logic isn't touched.
 
 ## Running it
 
