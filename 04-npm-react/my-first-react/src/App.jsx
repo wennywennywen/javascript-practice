@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Greetings from './Greetings'
 import Counter from './Counter'
+import BookItem from './BookItem'
 import './App.css'
 
 // ============================================================
@@ -14,6 +15,10 @@ function addBooks(books, title) {
   const ids = books.map(book => book.id)
   const newBook = { id: Math.max(0, ...ids) + 1, title: title.trim(), done: false }
   return [...books, newBook]
+}
+
+function removeBooks(books, id){
+    return books.filter(book => book.id !== id)
 }
 
 // ============================================================
@@ -40,6 +45,10 @@ function App() {
     setText("")
   }
 
+  function handleDelete(id) {
+    setBooks(removeBooks(books, id))
+  }
+
   return (
     <>
       {/* ---------- READING LIST ---------- */}
@@ -53,15 +62,15 @@ function App() {
           onChange={e => setText(e.target.value)}
         />
         <button type="submit">Add</button>
+
       </form>
 
-      <ul>
-        {books.map(book => (
-          <li key={book.id}>
-            {book.title} is {String(book.done)}
-          </li>
-        ))}
-      </ul>
+    <ul>
+      {books.map(book => (
+        <BookItem key={book.id} book={book} onDelete={handleDelete}
+        />
+      ))}
+    </ul>
 
       {/* ---------- PRACTICE: props (R4) ---------- */}
       <Greetings name="uyen" />
