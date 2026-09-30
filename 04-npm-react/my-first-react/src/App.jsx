@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Greetings from './Greetings'
 import Counter from './Counter'
 import BookItem from './BookItem'
@@ -27,15 +27,19 @@ function removeBooks(books, id){
 
 function App() {
   // --- the reading list ---
-  const [books, setBooks] = useState([
-    { id: 1, title: "Dune", done: false },
-  ])
+  const [books, setBooks] = useState(
+    JSON.parse(localStorage.getItem("books")) ?? []
+  )
   const [text, setText] = useState("")
 
   // --- counter practice (R5, R6) ---
   const [count, setCount] = useState(0)
   const [number, setNumber] = useState(0)
   const [sum, setSum] = useState(5)
+  
+  useEffect(() => {
+    localStorage.setItem("books", JSON.stringify(books))
+  }, [books])
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -72,6 +76,7 @@ function App() {
       ))}
     </ul>
 
+
       {/* ---------- PRACTICE: props (R4) ---------- */}
       <Greetings name="uyen" />
       <Greetings name="minh" />
@@ -99,5 +104,6 @@ function App() {
     </>
   )
 }
+
 
 export default App

@@ -450,3 +450,144 @@ function App() {
 - **IMPORTANT!!** `onSubmit` is always within the `<form>`
 - **NOTICE!** Always keep the input with `onChange`
 - `setText(e.target.value)` is to render that `text` is now the current value being typed in
+
+
+---
+
+## R9 — state
+
+
+```jsx
+      <ul>
+        {books.map(book => (
+          <li key={book.id}>
+            {book.title} is {String(book.done)}
+          </li>
+        ))}
+      </ul>
+
+```
+- IMPORTANT!! memorize that 
+Component — a function that returns markup.
+You have Review, Counter, Greetings.
+
+Prop — something you pass into a component, written as an attribute.
+You have <Greetings name="uyen" /> — name is a prop.
+<BookItem book={book}/>  - book is a prop
+
+State — a value the component remembers, via useState.
+You have books and text.
+const [text, setText] = useState("")
+const [books, setBooks] = useState([])
+
+so <BookItem book={book}/> mean takes one book as a prop and returns the <li>
+
+In your file, App uses <Greetings /> and <Counter /> in its markup. So:
+
+
+App                  ← parent
+├── Greetings        ← child
+├── Counter          ← child
+└── BookItem         ← child (once you add it)
+Parent = the component whose markup contains the other one.
+Child = the one being placed inside.
+
+props only flow downward, parent → child.
+
+<Greetings name="uyen" />
+//          └── App (parent) handing data to Greetings (child)
+Greetings can't reach back up and change anything in App. It receives and displays.
+
+So in R9:
+
+App is the parent. It owns books and setBooks.
+BookItem is the child. It gets one book and shows it.
+When the child's Delete button is clicked, it can't remove anything — setBooks lives upstairs. 
+
+- What is BookItem for?
+
+App:  "make one of these for each book"   ← the .map
+BookItem: "here's what one looks like"    ← the <li>
+Same as formatTask — it formatted one task, and renderTasks called it per item.
+
+- Click and Delete differences
+
+onClick is real. It's a built-in React prop on DOM elements. React wires it to the browser's actual click event. The name is fixed — onClick, onChange, onSubmit. Misspell it and nothing happens.
+
+onDelete is a name you invented. React has never heard of it. It's an ordinary prop, exactly like book:
+
+in BookItem.jsx
+<button onClick={() => props.onDelete(props.book.id)}>Delete</button>
+
+in App.jsx
+<BookItem book={book} onDelete={handleDelete} />
+//        ^^^^ data    ^^^^^^^^ a function
+That line says: "inside this child BookItem, props.onDelete means handleDelete."
+
+So when the child BookItem writes: props.onDelete(3)
+it's literally running: handleDelete(3)
+
+
+---
+
+## R10 — localStorage
+
+The four pieces and what it does
+- localStorage.setItem(key, text)	put text on the shelf under a label named as key
+- localStorage.getItem(key)	read the text back (null if never saved)
+- JSON.stringify(value)	array/object → text (stringify meaning turning it to text)
+- JSON.parse(text)	text → array/object (parse meaning rebuilding it back to array/object)
+Two belong to storage, two belong to JSON. Easy to mix up because they always appear together.
+
+Your two functions
+
+```js
+function saveItems() {
+  localStorage.setItem("items", JSON.stringify(tasks))
+}
+
+function loadItems() {
+  return JSON.parse(localStorage.getItem("items")) ?? []
+}
+```
+
+saveItems — read inside-out: stringify the array, then file it under "items".
+
+loadItems — read inside-out: get the text, parse it back into an array. 
+
+- In your program (a real array):
+
+[ { id: 1, title: "Dune", done: false } ]
+
+then JSON.stringify(...) turns it into:
+
+'[{"id":1,"title":"Dune","done":false}]'
+
+quotes around the whole thing — it's one string now
+every key is quoted no spaces
+you can't .map it. [0] gives you "[" — the first character
+That's what goes on the shelf.
+
+JSON.parse(...) turns it back:
+[ { id: 1, title: "Dune", done: false } ]
+
+- in R10 we will write like below 
+
+```js 
+const [books, setBooks] = useState(
+    JSON.parse(localStorage.getItem("books")) ?? []
+)
+
+import { useState, useEffect } from 'react'
+useEffect(() => {
+    localStorage.setItem("books", JSON.stringify(books))
+}, [books])
+```
+
+- useEffect is the designated place for "and also do this, once the page is on screen." Saving to localStorage doesn't change what's on screen — it's a consequence that happens alongside. That's why it belongs in an effect rather than in the component body.
+- The [] at the end of useEffect()
+It controls how often:
+useEffect(() => { ... }, [])          // after the FIRST render only
+useEffect(() => { ... })              // after EVERY render
+useEffect(() => { ... }, [books])     // after renders where `books` changed
+- 
