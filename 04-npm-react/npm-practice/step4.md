@@ -519,6 +519,15 @@ onDelete is a name you invented. React has never heard of it. It's an ordinary p
 in BookItem.jsx
 <button onClick={() => props.onDelete(props.book.id)}>Delete</button>
 
+Notice that its props.book.id because what is passed to BookItem from App is like 
+
+<BookItem key={book.id} book={book} onDelete={handleDelete} />
+//            ↑ 1           ↑ the whole object
+or 
+<BookItem key={1} book={{ id: 1, title: "Dune", done: false }} ... />.   ↑this   ↑this
+
+So in BookItem(props) to reach the id you need props.book.id
+
 in App.jsx
 <BookItem book={book} onDelete={handleDelete} />
 //        ^^^^ data    ^^^^^^^^ a function
@@ -526,6 +535,16 @@ That line says: "inside this child BookItem, props.onDelete means handleDelete."
 
 So when the child BookItem writes: props.onDelete(3)
 it's literally running: handleDelete(3)
+
+What happen between App and BookItem child
+render:  App     →  onDelete={handleDelete} function handed over, nothing runs
+          
+click:   child   →  props.onDelete(props.book.id)  child calls it, supplies 1
+         App     →  handleDelete(1)                id is now 1
+         App     →  setBooks(removeBooks(books,1)) state changes → re-render
+
+IMPORTANT!! in one BookItem can have multiple props like 
+<BookItem key={book.id} book={book} onDelete={handleDelete} onToggle={handleToggle}/>
 
 
 ---
@@ -591,3 +610,32 @@ useEffect(() => { ... }, [])          // after the FIRST render only
 useEffect(() => { ... })              // after EVERY render
 useEffect(() => { ... }, [books])     // after renders where `books` changed
 - 
+
+---
+
+## R11 — the full 
+
+Difference between summary and others function
+
+
+```jsx
+<h3>{summary(books)}</h3>              // display: result goes on screen, nothing changes
+setBooks(toggleBooks(books, id))       // change: result becomes the new state
+```
+
+summary produces text for this render only. It's thrown away afterwards and recalculated next time. Nothing needs storing because nothing changed — it's a read.
+
+toggleBooks produces a new array that has to become the truth. If you don't store it with setBooks, it's computed and discarded, books stays as it was, and nothing on screen moves.
+
+
+IMPORTANT!!! additional task to edit in CSS
+
+start by assigning className in the <li> of the BookItem where the className is CONDITIONAL TOO!!! Notice that its BookItem not inside the App because BookItem is where we format the book!
+
+```jsx
+<li className={props.book.done ? "done" : ""}>
+```
+
+so in css it can called by .done {text-decoration: ...}
+
+

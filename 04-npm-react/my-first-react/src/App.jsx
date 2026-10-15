@@ -21,6 +21,18 @@ function removeBooks(books, id){
     return books.filter(book => book.id !== id)
 }
 
+function toggleBooks(books, id){
+    return books.map(book => 
+        book.id === id ? {...book, done : !book.done} : book)
+}
+
+function summary(books){
+    if (books.length === 0)
+        return `Nothing to read yet`
+    const doneCount = books.filter(book => book.done).length
+    return `${doneCount} out of ${books.length} read`
+}
+
 // ============================================================
 // APP
 // ============================================================
@@ -53,6 +65,10 @@ function App() {
     setBooks(removeBooks(books, id))
   }
 
+  function handleToggle(id){
+    setBooks(toggleBooks(books, id))
+  }
+
   return (
     <>
       {/* ---------- READING LIST ---------- */}
@@ -69,9 +85,13 @@ function App() {
 
       </form>
 
+    <h3>
+      {summary(books)}
+    </h3>
+
     <ul>
       {books.map(book => (
-        <BookItem key={book.id} book={book} onDelete={handleDelete}
+        <BookItem key={book.id} book={book} onDelete={handleDelete} onToggle={handleToggle}
         />
       ))}
     </ul>
