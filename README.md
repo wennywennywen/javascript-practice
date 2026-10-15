@@ -32,7 +32,10 @@ Worked through with an AI tutor giving hints rather than answers. The exercise s
 ├── npm-practice/    package.json, installing packages, import/export, scripts
 │                    (+ step4.md — my own notes as I went)
 └── my-first-react/  a Vite + React project
-    └── src/         App.jsx, Counter.jsx, Greetings.jsx
+    └── src/         App.jsx, BookItem.jsx, Counter.jsx, Greetings.jsx
+
+05-tailwind/         utility-first CSS
+└── step5.md         my notes as I went
 
 notes/               the exercise sheets for each phase
 ```
@@ -85,8 +88,10 @@ worth running deliberately: corrupt the stored data, break the URL, turn the wif
   recorded, `import`/`export` and the `"type": "module"` switch, npm scripts.
   `step4.md` in there is my own running notes — every exercise with the code and what
   confused me about it.
-- `my-first-react/` — a Vite + React project. Components, props, JSX, `useState`, rendering a
-  list with `.map` and keys, and a controlled input with a form.
+- `my-first-react/` — a Vite + React project, and the main piece of work here: a reading list
+  with add, delete, toggle, a live summary, and localStorage persistence. Components, props,
+  JSX, `useState`, `useEffect`, lists with keys, controlled inputs, and lifting state up —
+  `BookItem` receives a book and reports clicks back via functions passed down as props.
 
 The interesting part of the React work is how much carried over: `addBooks` is the same
 function from `03-checkpoint`, unchanged. Taking data and returning data — no `document`, no
@@ -115,10 +120,16 @@ npm run dev
 
 `node_modules` is not committed — `npm install` rebuilds it from `package.json`.
 
+**`05-tailwind/`** — restyling the same app with utility classes instead of a stylesheet.
+`.done { text-decoration: line-through }` in a CSS file becomes `className="line-through"`
+on the element, so a component carries its own styling instead of pointing at a rule
+somewhere else.
+
 ## What's next
 
-Tailwind (`notes/step5-tailwind.md`), then Node and Express. React notes in
-`notes/step4-npm-react.md`.
+Node and Express — my own API, a Postgres database, and auth, so the data survives a
+different browser and a different device. The four routes are the same four operations
+already written here, moved across the network.
 
 ## Note on the comments
 
