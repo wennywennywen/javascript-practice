@@ -72,14 +72,15 @@ function App() {
   return (
     <>
       {/* ---------- READING LIST ---------- */}
-      <h2>Reading list</h2>
+      <h2 className="text-3xl font-bold mb-4 bg-blue-500">Reading list</h2>
 
-      <form onSubmit={handleSubmit}>
+      <form className="p-4 px-4 py-2 pt-4 m-4 mx-auto mt-8" onSubmit={handleSubmit}>
         <label htmlFor="book-input">What's to read?</label>
         <input
           id="book-input"
           value={text}
           onChange={e => setText(e.target.value)}
+          className="text-red-700"
         />
         <button type="submit">Add</button>
 
