@@ -117,7 +117,7 @@ npm run dev
 
 ## What's next
 
-React proper, then Tailwind, then Node and Express. Notes in
+Tailwind (`notes/step5-tailwind.md`), then Node and Express. React notes in
 `notes/step4-npm-react.md`.
 
 ## Note on the comments
