@@ -36,7 +36,6 @@ function summary(books){
 // ============================================================
 // APP
 // ============================================================
-
 function App() {
   // --- the reading list ---
   const [books, setBooks] = useState(
@@ -70,17 +69,17 @@ function App() {
   }
 
   return (
-    <>
+      <div className='max-w-md mx-auto p-4'>
       {/* ---------- READING LIST ---------- */}
       <h2 className="text-3xl font-bold mb-4 bg-blue-500">Reading list</h2>
 
-      <form className="p-4 px-4 py-2 pt-4 m-4 mx-auto mt-8" onSubmit={handleSubmit}>
+      <form className="p-4 px-4 py-2 pt-4 m-4 mx-auto mt-8 flex flex-col gap-1 " onSubmit={handleSubmit}>
         <label htmlFor="book-input">What's to read?</label>
         <input
           id="book-input"
           value={text}
           onChange={e => setText(e.target.value)}
-          className="text-red-700"
+          className="text-red-700 border border-gray-300 rounded px-3 py-2"
         />
         <button type="submit">Add</button>
 
@@ -122,9 +121,8 @@ function App() {
 
       {/* ---------- PRACTICE: component in its own file ---------- */}
       <Counter />
-    </>
+    </div>
   )
 }
-
 
 export default App
